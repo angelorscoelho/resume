@@ -1,0 +1,193 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Angelo Coelho Resume
+% 
+% Candidate: Ângelo Coelho
+% Position: Software Engineer
+% Location: Braga, Portugal
+% Email: angelorscoelho@gmail.com
+% Phone: +351 915 479 201
+% LinkedIn: linkedin.com/in/angelorscoelho
+%
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[]{styling}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\pagestyle{fancy}
+\fancyhf{}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     HEADER SECTION (Photo + Name)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\begin{minipage}[t]{0.28\textwidth}
+% SECTION 1: Profile Photo
+\vspace{0pt}
+\begin{tikzpicture}
+    \clip (0,0) circle (2.1cm);
+    \node at (0,0) {\includegraphics[width=5cm]{profile_photo.png}};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.68\textwidth}
+% SECTION 2: Name
+\centering % Horizontally center the name block
+\vspace*{22pt} % Pull the name up to the minipage top edge (adjust this value)
+{\fontsize{32pt}{38pt}\selectfont\bfseries\fontspec{Lato}\color{title} Ângelo Coelho}
+
+% Tight spacing between Name and Profession
+\vspace*{4pt} % Use a negative skip to counteract line height/implicit space
+{\fontsize{12pt}{14pt}\selectfont\color{subtitle}\fontspec{Lato} Software Engineer}
+
+% Tight spacing between Profession and Links
+\vspace*{4pt} % Use a small positive skip for a tight separation
+\centering % Ensure the links block is also centered
+{\fontsize{8pt}{10pt}\selectfont\color{heading}\fontspec{Lato}
+\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/linkedin.png}} \href{https://www.linkedin.com/in/angelorscoelho}{angelorscoelho} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/mail.png}} \href{mailto:angelorscoelho@gmail.com}{angelorscoelho@gmail.com} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/phone.png}} \href{tel:+351915479201}{+351 915 479 201} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/home.png}} \href{https://maps.app.goo.gl/rUPpGQsSzKjy365C9}{Braga, Portugal}
+}
+\end{minipage}
+
+\vspace{24pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     MAIN CONTENT (Education/Skills + About/Experience)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\begin{minipage}[t]{0.28\textwidth}
+% SECTION 3: Education & Skills
+\vspace{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     EDUCATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Education}
+\subsection{University of Minho}
+\descript{BSc Computer Science}
+\location{2013 - 2018}
+\location{Braga, Portugal}
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     SKILLS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Skills}
+
+\subsection{Languages}
+PHP • C\# • Python \\
+JavaScript • TypeScript \\
+SQL • Java
+\sectionsep
+
+\subsection{Frameworks}
+Laravel • .NET 7 \\
+ASP.NET • Vue.js \\
+Node.js
+\sectionsep
+
+\subsection{Databases}
+SQL Server • PostgreSQL \\
+MariaDB • MySQL • Redis
+\sectionsep
+
+\subsection{DevOps}
+Docker • Jenkins • Git \\
+CI/CD • Azure (SSO/IAM)
+\sectionsep
+
+\subsection{Key Skills}
+REST APIs \\
+Event-Driven Systems \\
+Microservices \\
+Solace PubSub+ \\
+Web Scraping (Selenium) \\
+AI-Assisted Dev \\
+LEAN Methodology
+\sectionsep
+
+\subsection{Learning}
+Kubernetes • AWS \\
+Machine Learning
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     LANGUAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Languages}
+\textbf{Portuguese} Native \\
+\textbf{English} Proficient \\
+\textbf{Spanish} Proficient \\
+\textbf{French} Intermediate
+\sectionsep
+
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.68\textwidth}
+% SECTION 4: About Me & Experience
+\vspace{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     ABOUT ME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{About Me}
+I'm a Backend Software Engineer with 7+ years developing software solutions for industrial and enterprise environments. Specialized in high-performance APIs, event-driven architectures, and production monitoring tools. Proven ability to deliver measurable business impact through technical excellence and cross-functional collaboration. Currently expanding expertise in cloud infrastructure and DevOps, with strong AI-assisted development skills.
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     EXPERIENCE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experience}
+\runsubsection{Bosch}
+\descript{| Software Engineer}
+\location{Feb 2022 – Present | Braga, Portugal}
+\vspace{\topsep}
+\begin{tightemize}
+\item Developed and maintained production software tools for industrial systems using PHP, Laravel, Vue.js, and Solace PubSub+, serving thousands of daily users with high performance requirements and continuous optimization
+\item Built automation applications for low-latency event-driven communication and real-time production monitoring
+\item Implemented Azure SSO for 200+ users across production systems
+\item Created KPI dashboards used by hundreds of users for daily productivity analysis and decision-making
+\item Led LEAN initiatives, automating workflows and reducing overhead by 20+ hours/month
+\item Championed AI-assisted development practices using GitHub Copilot, training team members and accelerating feature delivery
+\end{tightemize}
+\sectionsep
+
+\runsubsection{Eticadata Software (CEGID)}
+\descript{| Software Engineer}
+\location{Nov 2018 – Jan 2022 | Braga, Portugal}
+\vspace{\topsep}
+\begin{tightemize}
+\item Designed databases for enterprise ERP, accounting, and hospitality systems serving 500+ clients
+\item Built RESTful APIs using .NET 7 and ASP.NET Core handling 100K+ daily requests with 99.8\% uptime
+\item Developed UI components with TypeScript and KnockoutJS, improving user experience by 40\%
+\item Implemented Selenium testing and web scraping strategies covering 200+ scenarios, reducing QA time by 30\%
+\item Managed 60+ web pages serving 10K+ concurrent users with consistent performance
+\end{tightemize}
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     CERTIFICATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Certifications}
+\textbf{Jenkins: From Zero to Hero} - LearnKartS (2025) \\
+\sectionsep
+\textbf{Prompt Engineering} - Vanderbilt Univ. (2025) \\
+\sectionsep
+\textbf{ML with Python} - Coursera (2023)
+\sectionsep
+
+\end{minipage}
+
+\end{document}
