@@ -1,0 +1,45 @@
+name: Build and publish resume PDF
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Install TeX packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended fonts-lmodern
+
+      - name: Make build script executable
+        run: chmod +x ./scripts/build.sh || true
+
+      - name: Build PDF
+        run: ./scripts/build.sh
+
+      - name: Commit resume.pdf if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f resume.pdf ]; then echo "resume.pdf not found" >&2; exit 1; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f resume.pdf
+          git commit -m "ci: update resume.pdf" || echo "no changes"
+          git push origin HEAD:main
+
+      - name: Upload resume artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume.pdf
+          path: resume.pdf

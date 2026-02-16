@@ -1,0 +1,11 @@
+# Ignore generated PDF by default; CI will force-add when publishing
+resume.pdf
+
+# Aux files
+*.aux
+*.log
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.synctex.gz
