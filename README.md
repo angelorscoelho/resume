@@ -86,3 +86,7 @@ It is licensed under the Apache License 2.0.
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+## Build & CI
+
+This repository includes a Makefile and helper scripts to build a single PDF named `resume.pdf` at the repository root. To build locally run `make pdf` or `scripts/build.sh` (on POSIX); on Windows use `scripts\\build.bat`. The generated `resume.pdf` will appear at the repository root. A GitHub Actions workflow (.github/workflows/build-and-publish-resume.yml) will build the PDF on push to `main` and upload it as an artifact; when the PDF changes the workflow will commit the updated `resume.pdf` back to `main` using the built-in `GITHUB_TOKEN`. Note: keeping a prebuilt `resume.pdf` in the repo is recommended if your CI cannot run LaTeX locally.
