@@ -198,9 +198,9 @@ Last Updated on \today
 
 % Section separators
 \usepackage{titlesec}
-\titlespacing{\section}{0pt}{1pt}{1pt}
-\titlespacing{\subsection}{0pt}{0pt}{0pt}
-\newcommand{\sectionsep}{\vspace{0pt}}
+\titlespacing{\section}{0pt}{6pt}{4pt}
+\titlespacing{\subsection}{0pt}{4pt}{0pt}
+\newcommand{\sectionsep}{\vspace{6pt}}
 
 % Headings command
 \titleformat{\section}{\color{title}
