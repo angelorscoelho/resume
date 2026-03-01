@@ -7,6 +7,7 @@
 }
 \ProcessOptions\relax
 \LoadClass{article}
+\raggedbottom
 
 % Package Imports
 \usepackage[lmargin=0.9cm, vmargin=0.85cm, rmargin=0.9cm]{geometry}
