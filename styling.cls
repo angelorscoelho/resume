@@ -7,17 +7,19 @@
 }
 \ProcessOptions\relax
 \LoadClass{article}
-\raggedbottom
 
 % Package Imports
-\usepackage[lmargin=0.5cm, vmargin=0.2cm, rmargin=0.5cm]{geometry}
+\usepackage[lmargin=0.9cm, vmargin=0.65cm, rmargin=0.9cm]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{xcolor}
-% \usepackage{pifont} % Removed for ATS compatibility
+\usepackage{pifont}
 \usepackage[document]{ragged2e}
 
+% Globally disable paragraph indentation
+\setlength{\parindent}{0pt}
+\setlength{\JustifyingParindent}{0pt}
 
 % Publications
 \usepackage{cite}
@@ -130,23 +132,23 @@
 \def \mainfontbold {inter-semibold}
 % \def \mainbolditalicfont {}
 % \def \mainitalicfont {}
-\def \mainfontsize {8.5}
+\def \mainfontsize {9.5}
 \def \mainsansfont {inter-light}
 
 %Main Subheading Font Definitions
 %Used for company name and sub-skills
 \def \pathsubheadingfont {\pathtitlefont}
 \def \subheadingfont {\titlefont}
-\def \subheadingsize {10}
+\def \subheadingsize {12}
 
 %Main Job Descriptor and Location Font Definitions
 %Used for company name and sub-skills
 \def \pathdescriptorfont {\pathsubheadingfont}
 \def \descriptorfont {\secondnamefont}
-\def \descriptorsize {9}
+\def \descriptorsize {12}
 \def \pathlocationfont {\pathsubheadingfont}
 \def \locationfont {\subheadingfont}
-\def \locationsize {7pt}
+\def \locationsize {8pt}
 
 %Main Monospace Font Definitions 
 %Used for Job Title and Contact Line 
@@ -198,13 +200,13 @@ Last Updated on \today
 
 % Section separators
 \usepackage{titlesec}
-\titlespacing{\section}{0pt}{6pt}{4pt}
-\titlespacing{\subsection}{0pt}{4pt}{0pt}
-\newcommand{\sectionsep}{\vspace{6pt}}
+\titlespacing{\section}{0pt}{4pt}{4pt}
+\titlespacing{\subsection}{0pt}{0pt}{0pt}
+\newcommand{\sectionsep}{\vspace{4pt}}
 
 % Headings command
 \titleformat{\section}{\color{title}
-\scshape\fontspec[Path = \pathtitlefont]{\titlefont}\fontsize{13pt}{16pt}\selectfont \raggedright}{}{0em}{}
+\scshape\fontspec[Path = \pathtitlefont]{\titlefont}\fontsize{16pt}{24pt}\selectfont \raggedright}{}{0em}{}
 
 % Subheadings command
 \titleformat{\subsection}{
@@ -216,7 +218,7 @@ Last Updated on \today
 
 % Descriptors command
 \newcommand{\descript}[1]{
-\color{subheadings}\raggedright\scshape\fontspec[Path = \pathdescriptorfont]{\descriptorfont}\fontsize{\descriptorsize}{13pt}\selectfont {#1 \\} \normalfont}
+\color{subheadings}\raggedright\scshape\fontspec[Path = \pathdescriptorfont]{\descriptorfont}\fontsize{\descriptorsize}{14pt}\selectfont {#1 \\} \normalfont}
 
 % Location command
 \newcommand{\location}[1]{
@@ -240,6 +242,6 @@ Last Updated on \today
 
 % Bullet Lists with fewer gaps command
 \newenvironment{tightemize}{
-\vspace{-\topsep}\begin{itemize}[label=\textbullet]\itemsep0pt \parskip0pt \parsep0pt \topsep0pt}
-{\end{itemize}\vspace{-\topsep}}
+\begin{itemize}[label=\ding{212}, topsep=0pt, partopsep=0pt]\justifying\itemsep-1pt \parskip0pt \parsep0pt}
+{\end{itemize}}
 

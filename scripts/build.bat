@@ -10,12 +10,14 @@ if "%MAIN%"=="" (
   exit /b 1
 )
 echo Main tex: %MAIN%
+REM Ensure MiKTeX silently auto-installs missing packages
+initexmf --set-config-value [MPM]AutoInstall=1 >nul 2>&1
 where latexmk >nul 2>&1
 if %errorlevel%==0 (
-  latexmk -pdf -interaction=nonstopmode "%MAIN%" || exit /b %errorlevel%
+  latexmk -xelatex -interaction=nonstopmode "%MAIN%" || exit /b %errorlevel%
 ) else (
-  pdflatex -interaction=nonstopmode "%MAIN%" || exit /b %errorlevel%
-  pdflatex -interaction=nonstopmode "%MAIN%" || exit /b %errorlevel%
+  xelatex --enable-installer -interaction=nonstopmode "%MAIN%" || exit /b %errorlevel%
+  xelatex --enable-installer -interaction=nonstopmode "%MAIN%" || exit /b %errorlevel%
 )
 for %%A in ("%MAIN%") do set "OUT=%%~nA.pdf"
 if exist "%OUT%" (
