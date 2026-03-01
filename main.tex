@@ -27,24 +27,26 @@
 \begin{minipage}[t]{0.28\textwidth}
 % SECTION 1: Profile Photo
 \vspace{0pt}
+% place a square box with max dimensions before clipping to avoid huge bounding boxes
 \begin{tikzpicture}
-    \clip (0,0) circle (2.1cm);
-    \node at (0,0) {\includegraphics[width=5cm]{profile_photo.png}};
+    \clip (0,0) circle (1.75cm);
+    % includegraphics constrained to fixed width and height to prevent excessive height
+    \node at (0,0) {\includegraphics[width=4cm,height=4cm,keepaspectratio]{profile_photo.png}};
 \end{tikzpicture}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.68\textwidth}
 % SECTION 2: Name
 \centering % Horizontally center the name block
-\vspace*{22pt} % Pull the name up to the minipage top edge (adjust this value)
+\vspace*{10pt} % Pull the name up to the minipage top edge (adjust this value)
 {\fontsize{32pt}{38pt}\selectfont\bfseries\fontspec{Lato}\color{title} Ângelo Coelho}
 
 % Tight spacing between Name and Profession
-\vspace*{4pt} % Use a negative skip to counteract line height/implicit space
+\vspace*{2pt} % Use a negative skip to counteract line height/implicit space
 {\fontsize{12pt}{14pt}\selectfont\color{subtitle}\fontspec{Lato} Software Engineer}
 
 % Tight spacing between Profession and Links
-\vspace*{4pt} % Use a small positive skip for a tight separation
+\vspace*{2pt} % Use a small positive skip for a tight separation
 \centering % Ensure the links block is also centered
 {\fontsize{8pt}{10pt}\selectfont\color{heading}\fontspec{Lato}
 \raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/linkedin.png}} \href{https://www.linkedin.com/in/angelorscoelho}{angelorscoelho} \hfill
@@ -54,7 +56,9 @@
 }
 \end{minipage}
 
-\vspace{8pt}
+\typeout{<< after header spacing >>}
+\vspace{4pt}
+\typeout{<< before main content >>}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     MAIN CONTENT (Education/Skills + About/Experience)

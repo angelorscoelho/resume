@@ -10,7 +10,7 @@
 \raggedbottom
 
 % Package Imports
-\usepackage[lmargin=0.9cm, vmargin=0.85cm, rmargin=0.9cm]{geometry}
+\usepackage[lmargin=0.7cm, vmargin=0.6cm, rmargin=0.7cm]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -130,23 +130,23 @@
 \def \mainfontbold {inter-semibold}
 % \def \mainbolditalicfont {}
 % \def \mainitalicfont {}
-\def \mainfontsize {9.5}
+\def \mainfontsize {8.5}
 \def \mainsansfont {inter-light}
 
 %Main Subheading Font Definitions
 %Used for company name and sub-skills
 \def \pathsubheadingfont {\pathtitlefont}
 \def \subheadingfont {\titlefont}
-\def \subheadingsize {12}
+\def \subheadingsize {11}
 
 %Main Job Descriptor and Location Font Definitions
 %Used for company name and sub-skills
 \def \pathdescriptorfont {\pathsubheadingfont}
 \def \descriptorfont {\secondnamefont}
-\def \descriptorsize {10}
+\def \descriptorsize {9}
 \def \pathlocationfont {\pathsubheadingfont}
 \def \locationfont {\subheadingfont}
-\def \locationsize {8pt}
+\def \locationsize {7pt}
 
 %Main Monospace Font Definitions 
 %Used for Job Title and Contact Line 
@@ -200,7 +200,7 @@ Last Updated on \today
 \usepackage{titlesec}
 \titlespacing{\section}{0pt}{5pt}{5pt}
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
-\newcommand{\sectionsep}{\vspace{5pt}}
+\newcommand{\sectionsep}{\vspace{3pt}}
 
 % Headings command
 \titleformat{\section}{\color{title}
