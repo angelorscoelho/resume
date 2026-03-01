@@ -36,25 +36,25 @@
 \begin{minipage}[t]{0.68\textwidth}
 % SECTION 2: Name
 \centering % Horizontally center the name block
-\vspace*{22pt} % Pull the name up to the minipage top edge (adjust this value)
+\vspace*{10pt} % Pull the name up to the minipage top edge (adjust this value)
 {\fontsize{32pt}{38pt}\selectfont\bfseries\fontspec[Path=fonts/sourcesanspro/]{SourceSansPro-Bold}\color{title} Ângelo Coelho}
 
 % Tight spacing between Name and Profession
-\vspace*{4pt} % Use a negative skip to counteract line height/implicit space
+\vspace*{2pt} % Use a negative skip to counteract line height/implicit space
 {\fontsize{12pt}{14pt}\selectfont\color{subtitle}\fontspec[Path=fonts/sourcesanspro/]{SourceSansPro-Regular} Software Engineer}
 
 % Tight spacing between Profession and Links
-\vspace*{4pt} % Use a small positive skip for a tight separation
+\vspace*{2pt} % Use a small positive skip for a tight separation
 \centering % Ensure the links block is also centered
 {\fontsize{8pt}{10pt}\selectfont\color{heading}\fontspec[Path=fonts/inter/]{Inter-Light}
-\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/linkedin.png}} \href{https://www.linkedin.com/in/angelorscoelho}{angelorscoelho} \hfill
-\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/mail.png}} \href{mailto:angelorscoelho@gmail.com}{angelorscoelho@gmail.com} \hfill
-\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/github.png}} \href{https://github.com/angelorscoelho}{angelorscoelho} \hfill
-\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/homesquare.png}} \href{https://angelorscoelho.dev}{angelorscoelho.dev}
+\raisebox{-0.2\height}{\includegraphics[height=10pt]{icons/main/linkedin.png}} \href{https://www.linkedin.com/in/angelorscoelho}{angelorscoelho} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=10pt]{icons/main/mail.png}} \href{mailto:angelorscoelho@gmail.com}{angelorscoelho@gmail.com} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=10pt]{icons/main/github.png}} \href{https://github.com/angelorscoelho}{angelorscoelho} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=10pt]{icons/main/homesquare.png}} \href{https://angelorscoelho.dev}{angelorscoelho.dev}
 }
 \end{minipage}
 
-\vspace{10pt}
+\vspace{5pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     MAIN CONTENT (Education/Skills + About/Experience)
@@ -72,7 +72,7 @@
 \section{Education}
 \subsection{University of Minho}
 \descript{BSc Computer Science}
-\location{2013 - 2018}
+\location{2018}
 \location{Braga, Portugal}
 \sectionsep
 
@@ -142,7 +142,8 @@ Machine Learning
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Summary}
-Senior Software Engineer (7+ years) specialising in fault-tolerant distributed systems, event-driven microservices, and high-availability backend platforms. Proven track record designing scalable data pipelines, optimising high-throughput systems under strict latency constraints, and leading AI-augmented SDLC practices. Backend-focused, E2E-capable, and driven by a high standard of code quality, modularity, and long-term maintainability.
+\justifying
+Senior Software Engineer (7+ years) specialising in fault-tolerant distributed systems, event-driven microservices, and high-availability backend platforms. Proven track record designing scalable data pipelines, optimising high-throughput systems under strict latency constraints, and leading AI-augmented SDLC practices. Backend-focused and E2E-capable, driven by modularity, code quality, and maintainability.
 \sectionsep
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -150,10 +151,10 @@ Senior Software Engineer (7+ years) specialising in fault-tolerant distributed s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Experience}
-\runsubsection{Bosch}
+\runsubsection{Bosch}%
 \descript{| Software Engineer}
 \location{Feb 2022 – Present | Braga, Portugal}
-\vspace{\topsep}
+\vspace{2pt}
 \begin{tightemize}
 \item Architected nightly ETL pipelines (00h--07h) producing indexed SQL Views, eliminating lock contention and enabling KPI dashboards with 99.9\% uptime.
 \item Engineered fault-tolerant Solace PubSub+ consumers across 15 topics processing industrial telemetry at $>$1,000 events/min --- enforcing $<$200ms E2E latency via GUID-based deduplication, concurrent job dispatch, DB transaction guards, and in-memory recovery buffering.
@@ -163,16 +164,16 @@ Senior Software Engineer (7+ years) specialising in fault-tolerant distributed s
 \item Championed AI-augmented SDLC practices with GitHub Copilot, mentoring 10+ engineers and accelerating feature delivery by 25\%.
 \item Re-architected CI/CD pipelines using GitHub Actions, custom state-machine CLI tooling, self-hosted runners, and automated N-5 backups to reduce deployment risk and operational overhead.
 \end{tightemize}
-\sectionsep
+\vspace{6pt}
 
-\runsubsection{Eticadata Software (CEGID)}
+\runsubsection{Eticadata Software (CEGID)}%
 \descript{| Software Engineer}
 \location{Nov 2018 – Jan 2022 | Braga, Portugal}
-\vspace{\topsep}
+\vspace{2pt}
 \begin{tightemize}
 \item Architected E2E management modules (hospitality, accounting, invoicing): directed UI/UX, backend logic, and maintained solutions for 500+ clients.
 \item Guided the migration of 20-year VB6 monoliths to .NET via decompilation pipelines, aggressively eliminating 1000+ line unmaintainable methods.
-\item Engineered a fault-tolerant document extraction pipeline automating fiscal compliance workflows across 8+ government portals (IRS, Social Security, pension authorities) --- generating payment guides, tax statements, and fiscal extracts via resilient XPath-based Selenium automation.
+\item Engineered a fault-tolerant document extraction pipeline automating fiscal compliance workflows across 5+ government portals (IRS, Social Security, pension authorities) --- generating payment guides, tax statements, and fiscal extracts via resilient XPath-based Selenium automation.
 \item Built a secure Identity Vault embedding automated state machines and Just-In-Time decryption to mitigate sensitive data legal risks.
 \item Optimised DB queries via EXPLAIN plans and developed low-memory UI engines for constrained hardware environments (4GB RAM / 100GB disk).
 \end{tightemize}
@@ -183,10 +184,11 @@ Senior Software Engineer (7+ years) specialising in fault-tolerant distributed s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Certifications}
+\justifying
 \href{https://www.coursera.org/account/accomplishments/specialization/N2KXEZEGW96J}{\textbf{AWS Cloud Solutions Architect} -- AWS (2025) · Cloud-native architecture} \\
 \href{https://www.coursera.org/account/accomplishments/specialization/certificate/ZXTDN19QJXYU}{\textbf{Jenkins: From Zero to Hero} -- LearnKartS (2025) · CI/CD migrations} \\
 \href{https://www.coursera.org/account/accomplishments/specialization/HPTQ605HG1RT}{\textbf{Prompt Engineering Specialization} -- Vanderbilt Univ. (2025) · AI-SDLC orchestration} \\
-\textbf{Building AI Agents \& Agentic Workflows} -- DeepLearning.AI (Ongoing) · Multi-model SDLC orchestration
+\textbf{Building AI Agents \& Agentic Workflows} -- DeepLearning.AI (In progress)
 \sectionsep
 
 \end{minipage}

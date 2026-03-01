@@ -9,12 +9,6 @@ resume.pdf
 *.out
 *.toc
 *.synctex.gz
-node_modules/
-package-lock.json
-main.pdf
+build_err.txt
 .gitignore
-.gitignore
-page-1.png
-page1.txt
-page-2.png
-page2.txt
+build_out.txt
