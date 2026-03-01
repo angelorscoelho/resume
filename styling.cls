@@ -15,7 +15,7 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{pifont}
+% \usepackage{pifont} % Removed for ATS compatibility
 \usepackage[document]{ragged2e}
 
 
@@ -240,6 +240,6 @@ Last Updated on \today
 
 % Bullet Lists with fewer gaps command
 \newenvironment{tightemize}{
-\vspace{-\topsep}\begin{itemize}[label=\ding{212}]\itemsep0pt \parskip0pt \parsep0pt \topsep0pt}
+\vspace{-\topsep}\begin{itemize}[label=\textbullet]\itemsep0pt \parskip0pt \parsep0pt \topsep0pt}
 {\end{itemize}\vspace{-\topsep}}
 
