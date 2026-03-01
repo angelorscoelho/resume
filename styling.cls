@@ -10,7 +10,7 @@
 \raggedbottom
 
 % Package Imports
-\usepackage[lmargin=0.5cm, vmargin=0.4cm, rmargin=0.5cm]{geometry}
+\usepackage[lmargin=0.5cm, vmargin=0.2cm, rmargin=0.5cm]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -198,9 +198,9 @@ Last Updated on \today
 
 % Section separators
 \usepackage{titlesec}
-\titlespacing{\section}{0pt}{2pt}{1pt}
+\titlespacing{\section}{0pt}{1pt}{1pt}
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
-\newcommand{\sectionsep}{\vspace{1pt}}
+\newcommand{\sectionsep}{\vspace{0pt}}
 
 % Headings command
 \titleformat{\section}{\color{title}
