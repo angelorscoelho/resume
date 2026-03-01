@@ -15,17 +15,17 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Install TeX packages
+      - name: Install XeLaTeX and required packages
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended fonts-lmodern
+            texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
 
-      - name: Make build script executable
-        run: chmod +x ./scripts/build.sh || true
-
-      - name: Build PDF
-        run: ./scripts/build.sh
+      - name: Build PDF with XeLaTeX
+        run: |
+          xelatex -interaction=nonstopmode main.tex
+          xelatex -interaction=nonstopmode main.tex
+          cp main.pdf resume.pdf
 
       - name: Commit resume.pdf if changed
         env:

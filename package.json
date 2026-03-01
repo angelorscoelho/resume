@@ -1,0 +1,12 @@
+{
+  "name": "angelo-coelho-resume",
+  "version": "1.0.0",
+  "description": "LaTeX resume build system",
+  "scripts": {
+    "build": "node scripts/compile.js",
+    "clean": "node -e \"const fs=require('fs');['main.aux','main.log','main.out','main.xdv'].forEach(f=>{try{fs.unlinkSync(f)}catch(e){}});\""
+  },
+  "devDependencies": {
+    "node-latex": "^3.1.0"
+  }
+}

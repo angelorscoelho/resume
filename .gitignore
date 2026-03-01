@@ -9,3 +9,5 @@ resume.pdf
 *.out
 *.toc
 *.synctex.gz
+node_modules/
+package-lock.json
