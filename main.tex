@@ -19,9 +19,6 @@
 
 \begin{document}
 
-% Safety margin: extends text area to guarantee one-page output across TeX distributions
-\enlargethispage{1.5cm}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     HEADER SECTION (Photo + Name)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,24 +37,24 @@
 % SECTION 2: Name
 \centering % Horizontally center the name block
 \vspace*{22pt} % Pull the name up to the minipage top edge (adjust this value)
-{\fontsize{32pt}{38pt}\selectfont\bfseries\fontspec{Lato}\color{title} Ângelo Coelho}
+{\fontsize{32pt}{38pt}\selectfont\bfseries\fontspec[Path=fonts/sourcesanspro/]{SourceSansPro-Bold}\color{title} Ângelo Coelho}
 
 % Tight spacing between Name and Profession
 \vspace*{4pt} % Use a negative skip to counteract line height/implicit space
-{\fontsize{12pt}{14pt}\selectfont\color{subtitle}\fontspec{Lato} Senior Software Engineer (Distributed Systems)}
+{\fontsize{12pt}{14pt}\selectfont\color{subtitle}\fontspec[Path=fonts/sourcesanspro/]{SourceSansPro-Regular} Software Engineer}
 
 % Tight spacing between Profession and Links
 \vspace*{4pt} % Use a small positive skip for a tight separation
 \centering % Ensure the links block is also centered
-{\fontsize{8pt}{10pt}\selectfont\color{heading}\fontspec{Lato}
+{\fontsize{8pt}{10pt}\selectfont\color{heading}\fontspec[Path=fonts/inter/]{Inter-Light}
 \raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/linkedin.png}} \href{https://www.linkedin.com/in/angelorscoelho}{angelorscoelho} \hfill
-\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/homesquare.png}} \href{https://angelorscoelho.dev}{angelorscoelho.dev} \hfill
 \raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/mail.png}} \href{mailto:angelorscoelho@gmail.com}{angelorscoelho@gmail.com} \hfill
-\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/home.png}} \href{https://maps.app.goo.gl/rUPpGQsSzKjy365C9}{Braga, Portugal}
+\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/github.png}} \href{https://github.com/angelorscoelho}{angelorscoelho} \hfill
+\raisebox{-0.2\height}{\includegraphics[height=8pt]{icons/main/homesquare.png}} \href{https://angelorscoelho.dev}{angelorscoelho.dev}
 }
 \end{minipage}
 
-\vspace{24pt}
+\vspace{10pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     MAIN CONTENT (Education/Skills + About/Experience)
@@ -104,7 +101,8 @@ MariaDB • MySQL • Redis
 
 \subsection{DevOps}
 Docker • Jenkins • Git \\
-CI/CD • Azure (SSO/IAM)
+CI/CD • Azure (SSO/IAM) \\
+Playwright • PHPUnit
 \sectionsep
 
 \subsection{Key Skills}
@@ -112,14 +110,9 @@ REST APIs \\
 Event-Driven Systems \\
 Microservices \\
 Solace PubSub+ \\
-Web Scraping (Selenium) \\
+Azure Entra ID / SSO \\
 AI-Assisted Dev \\
-LEAN Methodology \\
-System Design \\
-High Availability \\
-Observability \\
-Scalability \\
-Messaging Architecture
+LEAN Methodology
 \sectionsep
 
 \subsection{Learning}
@@ -149,16 +142,7 @@ Machine Learning
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Summary}
-\vspace{\topsep}
-Senior Software Engineer \& Systems Orchestrator (7+ years) designing fault-tolerant distributed systems for enterprise-scale environments. Expertise in event-driven microservices, high-availability architectures, scalable data pipelines, and observable backend platforms. Strong background in system design, performance optimization, and messaging architectures. Backend-focused yet E2E-capable — from architecture design to cloud deployment. Leading AI-augmented SDLC initiatives using GitHub Copilot to accelerate engineering velocity without compromising reliability or code quality.
-\sectionsep
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     CORE COMPETENCIES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Core Competencies}
-Distributed Systems Architecture • Event-Driven Microservices • System Design • Messaging Architecture • High Availability • Observability • Scalability • Performance Optimization • CI/CD Automation • DevOps • Cloud-Native Applications • AI-Augmented Development
+Senior Software Engineer (7+ years) specialising in fault-tolerant distributed systems, event-driven microservices, and high-availability backend platforms. Proven track record designing scalable data pipelines, optimising high-throughput systems under strict latency constraints, and leading AI-augmented SDLC practices. Backend-focused, E2E-capable, and driven by a high standard of code quality, modularity, and long-term maintainability.
 \sectionsep
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,11 +152,13 @@ Distributed Systems Architecture • Event-Driven Microservices • System Desig
 \section{Experience}
 \runsubsection{Bosch}
 \descript{| Software Engineer}
-\location{Feb 2022 -- Present | Braga, Portugal}
+\location{Feb 2022 – Present | Braga, Portugal}
 \vspace{\topsep}
 \begin{tightemize}
-\item Architected nightly ETL pipelines (00h--07h) producing indexed SQL Views, eliminating lock contention and enabling sub-second KPI dashboards with 99.9\% daytime uptime.
-\item Engineered fault-tolerant Solace PubSub+ consumers processing industrial telemetry at $<$200ms latency with resilient recovery mechanisms using GUID-based staging buffers.
+\item Architected nightly ETL pipelines (00h--07h) producing indexed SQL Views, eliminating lock contention and enabling KPI dashboards with 99.9\% uptime.
+\item Engineered fault-tolerant Solace PubSub+ consumers across 15 topics processing industrial telemetry at $>$1,000 events/min --- enforcing $<$200ms E2E latency via GUID-based deduplication, concurrent job dispatch, DB transaction guards, and in-memory recovery buffering.
+\item Implemented Azure Entra ID SSO (app registration, permission scoping, dual-call JWT flow) with automatic user profile sync to the local store on login.
+\item Delivered full-stack features end-to-end --- designing technical architecture, building custom frontend components from scratch (dynamic trees, multi-line grids, Ishikawa diagrams), and accompanying production rollouts.
 \item Led LEAN-driven systems redesign across 15 operational domains, reclaiming 240+ engineering hours/year ($\approx$€11.5K) in validated productivity gains.
 \item Championed AI-augmented SDLC practices with GitHub Copilot, mentoring 10+ engineers and accelerating feature delivery by 25\%.
 \item Re-architected CI/CD pipelines using GitHub Actions, custom state-machine CLI tooling, self-hosted runners, and automated N-5 backups to reduce deployment risk and operational overhead.
@@ -181,14 +167,14 @@ Distributed Systems Architecture • Event-Driven Microservices • System Desig
 
 \runsubsection{Eticadata Software (CEGID)}
 \descript{| Software Engineer}
-\location{Nov 2018 -- Jan 2022 | Braga, Portugal}
+\location{Nov 2018 – Jan 2022 | Braga, Portugal}
 \vspace{\topsep}
 \begin{tightemize}
-\item Architected complete E2E management modules (hospitality, accounting, invoicing): directed UI/UX, backend loops, and maintained solutions for 500+ clients.
+\item Architected E2E management modules (hospitality, accounting, invoicing): directed UI/UX, backend logic, and maintained solutions for 500+ clients.
 \item Guided the migration of 20-year VB6 monoliths to .NET via decompilation pipelines, aggressively eliminating 1000+ line unmaintainable methods.
-\item Engineered an RPA pipeline targeting unstable government portals (IRS, SS) with dynamic XPath probing—hitting 100\% extraction compliance.
+\item Engineered a fault-tolerant document extraction pipeline automating fiscal compliance workflows across 8+ government portals (IRS, Social Security, pension authorities) --- generating payment guides, tax statements, and fiscal extracts via resilient XPath-based Selenium automation.
 \item Built a secure Identity Vault embedding automated state machines and Just-In-Time decryption to mitigate sensitive data legal risks.
-\item Optimized sprawling enterprise DB queries via EXPLAIN plans and developed low-memory UI engines designed for heavily constrained hardware limits.
+\item Optimised DB queries via EXPLAIN plans and developed low-memory UI engines for constrained hardware environments (4GB RAM / 100GB disk).
 \end{tightemize}
 \sectionsep
 
@@ -197,9 +183,10 @@ Distributed Systems Architecture • Event-Driven Microservices • System Desig
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Certifications}
-\textbf{Jenkins: From Zero to Hero} -- LearnKartS (2025) \textit{· Applied in CI/CD migrations} \\
-\textbf{Prompt Engineering} -- Vanderbilt Univ.\ (2025) \textit{· Applied in AI-SDLC orchestration} \\
-\textbf{ML with Python} -- Coursera (2023) \textit{· Integrated into data pipelines}
+\href{https://www.coursera.org/account/accomplishments/specialization/N2KXEZEGW96J}{\textbf{AWS Cloud Solutions Architect} -- AWS (2025) · Cloud-native architecture} \\
+\href{https://www.coursera.org/account/accomplishments/specialization/certificate/ZXTDN19QJXYU}{\textbf{Jenkins: From Zero to Hero} -- LearnKartS (2025) · CI/CD migrations} \\
+\href{https://www.coursera.org/account/accomplishments/specialization/HPTQ605HG1RT}{\textbf{Prompt Engineering Specialization} -- Vanderbilt Univ. (2025) · AI-SDLC orchestration} \\
+\textbf{Building AI Agents \& Agentic Workflows} -- DeepLearning.AI (Ongoing) · Multi-model SDLC orchestration
 \sectionsep
 
 \end{minipage}
