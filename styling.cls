@@ -9,7 +9,7 @@
 \LoadClass{article}
 
 % Package Imports
-\usepackage[lmargin=0.9cm, vmargin=0.65cm, rmargin=0.9cm]{geometry}
+\usepackage[lmargin=1.3cm, vmargin=0.65cm, rmargin=0.4cm]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{graphicx}
