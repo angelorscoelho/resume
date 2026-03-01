@@ -10,7 +10,7 @@
 \raggedbottom
 
 % Package Imports
-\usepackage[lmargin=0.7cm, vmargin=0.6cm, rmargin=0.7cm]{geometry}
+\usepackage[lmargin=0.5cm, vmargin=0.4cm, rmargin=0.5cm]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -137,7 +137,7 @@
 %Used for company name and sub-skills
 \def \pathsubheadingfont {\pathtitlefont}
 \def \subheadingfont {\titlefont}
-\def \subheadingsize {11}
+\def \subheadingsize {10}
 
 %Main Job Descriptor and Location Font Definitions
 %Used for company name and sub-skills
@@ -198,13 +198,13 @@ Last Updated on \today
 
 % Section separators
 \usepackage{titlesec}
-\titlespacing{\section}{0pt}{4pt}{3pt}
+\titlespacing{\section}{0pt}{2pt}{1pt}
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
-\newcommand{\sectionsep}{\vspace{2pt}}
+\newcommand{\sectionsep}{\vspace{1pt}}
 
 % Headings command
 \titleformat{\section}{\color{title}
-\scshape\fontspec[Path = \pathtitlefont]{\titlefont}\fontsize{16pt}{24pt}\selectfont \raggedright}{}{0em}{}
+\scshape\fontspec[Path = \pathtitlefont]{\titlefont}\fontsize{13pt}{16pt}\selectfont \raggedright}{}{0em}{}
 
 % Subheadings command
 \titleformat{\subsection}{
@@ -240,6 +240,6 @@ Last Updated on \today
 
 % Bullet Lists with fewer gaps command
 \newenvironment{tightemize}{
-\vspace{-\topsep}\begin{itemize}[label=\ding{212}]\itemsep0pt \parskip0pt \parsep0pt}
+\vspace{-\topsep}\begin{itemize}[label=\ding{212}]\itemsep0pt \parskip0pt \parsep0pt \topsep0pt}
 {\end{itemize}\vspace{-\topsep}}
 
