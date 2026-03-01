@@ -198,9 +198,9 @@ Last Updated on \today
 
 % Section separators
 \usepackage{titlesec}
-\titlespacing{\section}{0pt}{5pt}{5pt}
+\titlespacing{\section}{0pt}{4pt}{3pt}
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
-\newcommand{\sectionsep}{\vspace{3pt}}
+\newcommand{\sectionsep}{\vspace{2pt}}
 
 % Headings command
 \titleformat{\section}{\color{title}
@@ -240,6 +240,6 @@ Last Updated on \today
 
 % Bullet Lists with fewer gaps command
 \newenvironment{tightemize}{
-\vspace{-\topsep}\begin{itemize}[label=\ding{212}]\itemsep1pt \parskip0pt \parsep0pt}
+\vspace{-\topsep}\begin{itemize}[label=\ding{212}]\itemsep0pt \parskip0pt \parsep0pt}
 {\end{itemize}\vspace{-\topsep}}
 
