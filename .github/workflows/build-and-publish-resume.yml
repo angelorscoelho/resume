@@ -21,13 +21,27 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
+            texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra \
+            ghostscript
 
       - name: Build PDF with XeLaTeX
         run: |
           xelatex -interaction=nonstopmode main.tex
           xelatex -interaction=nonstopmode main.tex
           cp main.pdf resume.pdf
+
+      - name: Compress resume.pdf with Ghostscript
+        run: |
+          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer \
+            -dNOPAUSE -dQUIET -dBATCH \
+            -sOutputFile=resume_compressed.pdf resume.pdf
+          if [ -s resume_compressed.pdf ]; then
+            mv resume_compressed.pdf resume.pdf
+            echo "Compressed resume.pdf size: $(du -sh resume.pdf | cut -f1)"
+          else
+            echo "Ghostscript compression failed; keeping original resume.pdf" >&2
+            rm -f resume_compressed.pdf
+          fi
 
       - name: Commit resume.pdf if changed
         env:

@@ -19,6 +19,18 @@ pdf:
 	if [ -f "$$out" ]; then \
 		cp -f "$$out" resume.pdf; \
 		echo "Built resume.pdf"; \
+		if command -v gs >/dev/null 2>&1; then \
+			gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer \
+				-dNOPAUSE -dQUIET -dBATCH \
+				-sOutputFile=resume_compressed.pdf resume.pdf; \
+			if [ -s resume_compressed.pdf ]; then \
+				mv resume_compressed.pdf resume.pdf; \
+				echo "Compressed resume.pdf: $$(du -sh resume.pdf | cut -f1)"; \
+			else \
+				echo "Ghostscript compression failed; keeping original resume.pdf" >&2; \
+				rm -f resume_compressed.pdf; \
+			fi; \
+		fi; \
 		exit 0; \
 	else \
 		echo "Failed to build $$out" >&2; \
