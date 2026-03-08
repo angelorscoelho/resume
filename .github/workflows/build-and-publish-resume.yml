@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -17,6 +18,17 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      - name: Compute resume artifact name
+        id: naming
+        run: |
+          SOURCE_SHA="${{ github.sha }}"
+          SHA_SUFFIX="${SOURCE_SHA: -8}"
+          RESUME_FILENAME="angelorscoelho_resume_${SHA_SUFFIX}.pdf"
+
+          echo "source_sha=${SOURCE_SHA}" >> "$GITHUB_OUTPUT"
+          echo "sha_suffix=${SHA_SUFFIX}" >> "$GITHUB_OUTPUT"
+          echo "resume_filename=${RESUME_FILENAME}" >> "$GITHUB_OUTPUT"
+
       - name: Install XeLaTeX and required packages
         run: |
           sudo apt-get update
@@ -26,32 +38,47 @@ jobs:
 
       - name: Build PDF with XeLaTeX
         run: |
+          git rm -f --ignore-unmatch angelorscoelho_resume_*.pdf resume.pdf resume-meta.json || true
           xelatex -interaction=nonstopmode main.tex
           xelatex -interaction=nonstopmode main.tex
-          cp main.pdf resume.pdf
+          cp main.pdf "${{ steps.naming.outputs.resume_filename }}"
 
-      - name: Compress resume.pdf with Ghostscript
+      - name: Compress generated PDF with Ghostscript
         run: |
           gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer \
             -dNOPAUSE -dQUIET -dBATCH \
-            -sOutputFile=resume_compressed.pdf resume.pdf
+            -sOutputFile=resume_compressed.pdf "${{ steps.naming.outputs.resume_filename }}"
           if [ -s resume_compressed.pdf ]; then
-            mv resume_compressed.pdf resume.pdf
-            echo "Compressed resume.pdf size: $(du -sh resume.pdf | cut -f1)"
+            mv resume_compressed.pdf "${{ steps.naming.outputs.resume_filename }}"
+            echo "Compressed ${{ steps.naming.outputs.resume_filename }} size: $(du -sh "${{ steps.naming.outputs.resume_filename }}" | cut -f1)"
           else
-            echo "Ghostscript compression failed; keeping original resume.pdf" >&2
+            echo "Ghostscript compression failed; keeping original ${{ steps.naming.outputs.resume_filename }}" >&2
             rm -f resume_compressed.pdf
           fi
 
-      - name: Commit resume.pdf if changed
+      - name: Write resume metadata
+        run: |
+          BUILT_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          cat > resume-meta.json <<EOF
+          {
+            "sha": "${{ steps.naming.outputs.source_sha }}",
+            "shaShort": "${{ steps.naming.outputs.sha_suffix }}",
+            "filename": "${{ steps.naming.outputs.resume_filename }}",
+            "builtAt": "${BUILT_AT}",
+            "resumeCommitUrl": "https://github.com/angelorscoelho/resume/commit/${{ steps.naming.outputs.source_sha }}",
+            "resumeWorkflowUrl": "https://github.com/angelorscoelho/resume/actions/workflows/build-and-publish-resume.yml"
+          }
+          EOF
+
+      - name: Commit generated resume if changed
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ ! -f resume.pdf ]; then echo "resume.pdf not found" >&2; exit 1; fi
+          if [ ! -f "${{ steps.naming.outputs.resume_filename }}" ]; then echo "${{ steps.naming.outputs.resume_filename }} not found" >&2; exit 1; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f resume.pdf
-          git commit -m "ci: update resume.pdf" || echo "no changes"
+          git add -f "${{ steps.naming.outputs.resume_filename }}" resume-meta.json
+          git commit -m "ci: update resume artifact [sha: ${{ steps.naming.outputs.sha_suffix }}]" || echo "no changes"
           git push origin HEAD:main
 
       - name: Trigger resume build on angelorscoelho.dev
@@ -68,5 +95,5 @@ jobs:
       - name: Upload resume artifact
         uses: actions/upload-artifact@v4
         with:
-          name: resume.pdf
-          path: resume.pdf
+          name: ${{ steps.naming.outputs.resume_filename }}
+          path: ${{ steps.naming.outputs.resume_filename }}

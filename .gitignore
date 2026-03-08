@@ -1,5 +1,7 @@
 # Ignore generated PDF by default; CI will force-add when publishing
 resume.pdf
+angelorscoelho_resume_*.pdf
+resume-meta.json
 
 # Aux files
 *.aux
@@ -12,3 +14,4 @@ resume.pdf
 build_err.txt
 .gitignore
 build_out.txt
+nul
