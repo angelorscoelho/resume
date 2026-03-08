@@ -28,15 +28,15 @@
 % SECTION 1: Profile Photo
 \vspace{0pt}
 \begin{tikzpicture}
-    \clip (0,0) circle (1.85cm);
-    \node at (0,0) {\includegraphics[width=4.4cm]{profile_photo.png}};
+    \clip (0,0) circle (2.1cm);
+    \node at (0,0) {\includegraphics[width=5cm]{profile_photo.png}};
 \end{tikzpicture}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.73\textwidth}
 % SECTION 2: Name
 \centering % Horizontally center the name block
-\vspace*{8pt} % Pull the name up to the minipage top edge (adjust this value)
+\vspace*{18pt} % Pull the name up to the minipage top edge (adjust this value)
 {\fontsize{32pt}{38pt}\selectfont\bfseries\fontspec[Path=fonts/sourcesanspro/]{SourceSansPro-Bold}\color{title} Ângelo Coelho}
 
 % Tight spacing between Name and Profession
@@ -54,7 +54,7 @@
 }
 \end{minipage}
 
-\vspace{14pt}
+\vspace{-3pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     MAIN CONTENT (Education/Skills + About/Experience)
@@ -63,7 +63,7 @@
 \noindent
 \begin{minipage}[t]{0.27\textwidth}
 % SECTION 3: Education & Skills
-\vspace{0pt}
+\vspace{10pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     EDUCATION
@@ -115,11 +115,6 @@ AI-Assisted Dev \\
 LEAN Methodology
 \sectionsep
 
-\subsection{Learning}
-Kubernetes • AWS \\
-Machine Learning
-\sectionsep
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     LANGUAGES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,7 +130,7 @@ Machine Learning
 \hfill
 \begin{minipage}[t]{0.73\textwidth}
 % SECTION 4: About Me & Experience
-\vspace{0pt}
+\vspace{10pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     SUMMARY
@@ -156,13 +151,13 @@ Senior Software Engineer (7+ years) specialising in fault-tolerant distributed s
 \location{Feb 2022 – Present | Braga, Portugal}
 \vspace{2pt}
 \begin{tightemize}
-\item Architected nightly ETL pipelines (00h--07h) producing indexed SQL Views, eliminating lock contention and enabling KPI dashboards with 99.9\% uptime.
-\item Engineered fault-tolerant Solace PubSub+ consumers across 15 topics processing industrial telemetry at $>$1,000 events/min --- enforcing $<$200ms E2E latency via GUID-based deduplication, concurrent job dispatch, DB transaction guards, and in-memory recovery buffering.
+\item Architected off-peak ETL pipelines producing indexed SQL Views, eliminating lock contention and enabling KPI dashboards on a three nines SLA.
+\item Engineered fault-tolerant Solace PubSub+ consumers processing industrial telemetry at $>$1,000 events/min --- enforcing $<$200ms E2E latency via GUID-based deduplication, concurrent job dispatch, DB transaction guards, and in-memory recovery buffering.
 \item Implemented Azure Entra ID SSO (app registration, permission scoping, dual-call JWT flow) with automatic user profile sync to the local store on login.
 \item Delivered full-stack features end-to-end --- designing technical architecture, building custom frontend components from scratch (dynamic trees, multi-line grids, Ishikawa diagrams), and accompanying production rollouts.
-\item Led LEAN-driven systems redesign across 15 operational domains, reclaiming 240+ engineering hours/year ($\approx$€11.5K) in validated productivity gains.
-\item Championed AI-augmented SDLC practices with GitHub Copilot, mentoring 10+ engineers and accelerating feature delivery by 25\%.
-\item Re-architected CI/CD pipelines using GitHub Actions, custom state-machine CLI tooling, self-hosted runners, and automated N-5 backups to reduce deployment risk and operational overhead.
+\item Championed LEAN methodologies, boosting team efficiency by 15\% and reclaiming 240+ engineering hours/year ($\approx$€11.5K).
+\item Pioneered AI-augmented SDLC workflows from planning to testing, sharing best practices across the department.
+\item Architected and implemented CI/CD pipelines using GitHub Actions, custom state-machine CLI tooling, self-hosted runners, and automated N-5 backups to reduce deployment risk and operational overhead.
 \end{tightemize}
 \vspace{6pt}
 
@@ -173,7 +168,7 @@ Senior Software Engineer (7+ years) specialising in fault-tolerant distributed s
 \begin{tightemize}
 \item Architected E2E management modules (hospitality, accounting, invoicing): directed UI/UX, backend logic, and maintained solutions for 500+ clients.
 \item Guided the migration of 20-year VB6 monoliths to .NET via decompilation pipelines, aggressively eliminating 1000+ line unmaintainable methods.
-\item Engineered a fault-tolerant document extraction pipeline automating fiscal compliance workflows across 5+ government portals (IRS, Social Security, pension authorities) --- generating payment guides, tax statements, and fiscal extracts via resilient XPath-based Selenium automation.
+\item Engineered a fault-tolerant extraction pipeline automating fiscal compliance across 5+ government portals (IRS, Social Security, pension authorities) --- generating payment guides, tax statements, and fiscal extracts via XPath-based Selenium automation.
 \item Built a secure Identity Vault embedding automated state machines and Just-In-Time decryption to mitigate sensitive data legal risks.
 \item Optimised DB queries via EXPLAIN plans and developed low-memory UI engines for constrained hardware environments (4GB RAM / 100GB disk).
 \end{tightemize}
