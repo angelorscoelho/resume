@@ -15,3 +15,5 @@ build_err.txt
 .gitignore
 build_out.txt
 nul
+__pycache__/
+*.pyc
