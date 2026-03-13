@@ -1,0 +1,162 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Siemens Energy — Gas Turbine AI Maintenance Assistant
+  Serverless backend: HTTP API Gateway + Python Lambda (Real RAG via Gemini + S3)
+
+Globals:
+  Function:
+    Timeout: 60
+    MemorySize: 512
+    Runtime: python3.11
+    Environment:
+      Variables:
+        GEMINI_API_KEY: !Ref GeminiApiKey
+        GEMINI_MODEL: !Ref GeminiModel
+
+Parameters:
+  GeminiApiKey:
+    Type: String
+    NoEcho: true
+    Description: >
+      Your Google Gemini API key (from AI Studio). Injected into Lambda as an
+      environment variable. For production, migrate to AWS Secrets Manager.
+
+  GeminiModel:
+    Type: String
+    Default: gemini-2.0-flash
+    AllowedValues:
+      - gemini-2.0-flash
+      - gemini-2.5-flash
+      - gemini-2.5-pro
+    Description: >
+      Gemini chat model. gemini-2.0-flash delivers fast responses (3-8 s)
+      suitable for structured maintenance queries within Lambda timeout limits.
+
+  S3BucketName:
+    Type: String
+    Default: siemens-rag-knowledge-base
+    Description: >
+      Name of the S3 bucket that holds the pre-computed chunk embeddings manifest
+      (chunks/embeddings.json). Must be globally unique. Created by this stack.
+
+  AllowedOrigin:
+    Type: String
+    Default: '*'
+    Description: >
+      CORS allowed origin. Set to your Vercel URL (e.g. https://your-app.vercel.app)
+      in production. Defaults to '*' for ease of PoC testing.
+
+Resources:
+
+  # ── HTTP API Gateway ───────────────────────────────────────────────────────
+  GasTurbineApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: prod
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+        MaxAge: 600
+
+  # ── S3 Knowledge Base Bucket ──────────────────────────────────────────────
+  KnowledgeBaseBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3BucketName
+      # Block all public access — Lambda reads via IAM role only
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # ── Lambda Function: AI Ask Assistant ─────────────────────────────────────
+  AskAssistantFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: siemens-poc-ask-assistant
+      CodeUri: ask_assistant/
+      Handler: app.lambda_handler
+      Description: >
+        Real-RAG maintenance assistant: embeds query with text-embedding-004 (768-dim),
+        retrieves top-3 chunks via cosine similarity from S3, then calls gemini-2.0-flash.
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:ListBucket
+              Resource:
+                - !Sub 'arn:aws:s3:::${S3BucketName}'
+                - !Sub 'arn:aws:s3:::${S3BucketName}/*'
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: !Ref S3BucketName
+          RAG_TOP_K: '3'
+      Events:
+        AskPost:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GasTurbineApi
+            Path: /ask-assistant
+            Method: POST
+        AskOptions:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GasTurbineApi
+            Path: /ask-assistant
+            Method: OPTIONS
+
+  # ── Lambda Function: Maintenance History ───────────────────────────────────
+  MaintenanceHistoryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: siemens-poc-maintenance-history
+      CodeUri: maintenance_history/
+      Handler: app.lambda_handler
+      Description: >
+        Returns structured maintenance history records for a given asset
+        (equipment_id param). Records are hardcoded in the Lambda for this PoC;
+        production would use a DynamoDB query.
+      Events:
+        HistoryGet:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GasTurbineApi
+            Path: /maintenance-history
+            Method: GET
+        HistoryOptions:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GasTurbineApi
+            Path: /maintenance-history
+            Method: OPTIONS
+
+Outputs:
+  ApiBaseUrl:
+    Description: >
+      HTTP API base URL. Append /ask-assistant for the chat endpoint or
+      /maintenance-history?equipment_id=GT-01 for maintenance history.
+      Copy this value into your frontend .env as VITE_API_URL.
+    Value: !Sub 'https://${GasTurbineApi}.execute-api.${AWS::Region}.amazonaws.com'
+
+  KnowledgeBaseBucketName:
+    Description: >
+      S3 bucket holding the RAG knowledge base (chunks/embeddings.json).
+      Run ingest_manuals.py once to populate it before first query.
+    Value: !Ref KnowledgeBaseBucket
+
+  AskAssistantFunctionArn:
+    Description: ARN of the Ask Assistant Lambda function (Real RAG — Gemini 2.0 Flash + S3)
+    Value: !GetAtt AskAssistantFunction.Arn
+
+  MaintenanceHistoryFunctionArn:
+    Description: ARN of the Maintenance History Lambda function
+    Value: !GetAtt MaintenanceHistoryFunction.Arn
