@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siemens Energy — AI Maintenance Assistant</title>
+
+  <!-- marked.js for Markdown → HTML rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <!-- DOMPurify to sanitize marked output and prevent XSS -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --siemens-teal:    #009999;
+      --siemens-dark:    #004c4c;
+      --siemens-light:   #e6f5f5;
+      --siemens-border:  #b2d8d8;
+      --user-bg:         #004c4c;
+      --user-fg:         #ffffff;
+      --bot-bg:          #f4f9f9;
+      --bot-fg:          #1a1a1a;
+      --bg:              #f0f4f4;
+      --font:            "Segoe UI", system-ui, Arial, sans-serif;
+      --radius:          12px;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--bot-fg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ───────────────────────────────────────────────── */
+    header {
+      background: var(--siemens-dark);
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    header svg { flex-shrink: 0; }
+
+    header .title { font-size: 1.15rem; font-weight: 600; letter-spacing: 0.01em; }
+    header .subtitle { font-size: 0.78rem; opacity: 0.75; margin-top: 2px; }
+
+    /* ── Chat container ───────────────────────────────────────── */
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ── Message bubbles ──────────────────────────────────────── */
+    .msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 85%;
+    }
+
+    .msg.user  { align-self: flex-end; align-items: flex-end; }
+    .msg.bot   { align-self: flex-start; align-items: flex-start; }
+
+    .msg .label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 5px;
+      opacity: 0.65;
+    }
+
+    .bubble {
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .msg.user .bubble {
+      background: var(--user-bg);
+      color: var(--user-fg);
+    }
+
+    .msg.bot .bubble {
+      background: var(--bot-bg);
+      color: var(--bot-fg);
+      border: 1px solid var(--siemens-border);
+    }
+
+    /* ── Markdown styles inside bot bubbles ───────────────────── */
+    .bubble h1, .bubble h2, .bubble h3 {
+      margin: 1em 0 0.4em;
+      line-height: 1.25;
+      color: var(--siemens-dark);
+    }
+    .bubble h1 { font-size: 1.2em; }
+    .bubble h2 { font-size: 1.1em; }
+    .bubble h3 { font-size: 1em; border-bottom: 1px solid var(--siemens-border); padding-bottom: 4px; }
+
+    .bubble h1:first-child, .bubble h2:first-child, .bubble h3:first-child { margin-top: 0; }
+
+    .bubble p { margin: 0.6em 0; }
+    .bubble p:first-child { margin-top: 0; }
+    .bubble p:last-child  { margin-bottom: 0; }
+
+    .bubble ul, .bubble ol { margin: 0.5em 0 0.5em 1.4em; }
+    .bubble li { margin-bottom: 4px; }
+
+    .bubble strong { font-weight: 700; color: var(--siemens-dark); }
+    .bubble em     { font-style: italic; }
+
+    .bubble code {
+      background: #ddeaea;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: "Courier New", monospace;
+      font-size: 0.9em;
+    }
+
+    .bubble pre {
+      background: #1e2e2e;
+      color: #c8ffee;
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      margin: 0.7em 0;
+    }
+    .bubble pre code { background: none; color: inherit; padding: 0; }
+
+    .bubble blockquote {
+      border-left: 4px solid var(--siemens-teal);
+      padding-left: 12px;
+      margin: 0.5em 0;
+      color: #444;
+    }
+
+    .bubble table {
+      border-collapse: collapse;
+      margin: 0.7em 0;
+      font-size: 0.9em;
+      width: 100%;
+    }
+    .bubble th, .bubble td {
+      border: 1px solid var(--siemens-border);
+      padding: 6px 10px;
+      text-align: left;
+    }
+    .bubble th { background: var(--siemens-light); font-weight: 600; }
+
+    .bubble hr { border: none; border-top: 1px solid var(--siemens-border); margin: 0.8em 0; }
+
+    /* ── Sources section ──────────────────────────────────────── */
+    .sources {
+      font-size: 0.75rem;
+      color: #555;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #e8f3f3;
+      border: 1px solid var(--siemens-border);
+      border-radius: 8px;
+    }
+    .sources strong { color: var(--siemens-dark); }
+    .sources .source-item { margin-top: 3px; }
+
+    /* ── Spinner ──────────────────────────────────────────────── */
+    .spinner {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      padding: 14px 18px;
+      background: var(--bot-bg);
+      border: 1px solid var(--siemens-border);
+      border-radius: var(--radius);
+    }
+    .spinner span {
+      width: 7px; height: 7px;
+      background: var(--siemens-teal);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .spinner span:nth-child(2) { animation-delay: 0.2s; }
+    .spinner span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+      40%           { transform: scale(1.1); opacity: 1;   }
+    }
+
+    /* ── Error message ────────────────────────────────────────── */
+    .error-bubble {
+      background: #fff0f0;
+      border: 1px solid #ffb3b3;
+      color: #8b0000;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+    }
+
+    /* ── Input bar ────────────────────────────────────────────── */
+    #input-bar {
+      background: #fff;
+      border-top: 1px solid var(--siemens-border);
+      padding: 14px 16px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Full-width wrapper to keep input bar flush to page edges */
+    #input-bar-wrapper {
+      background: #fff;
+      border-top: 1px solid var(--siemens-border);
+      padding: 0;
+      width: 100%;
+    }
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: 1px solid var(--siemens-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-height: 160px;
+      overflow-y: auto;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: var(--siemens-teal); }
+
+    button#send-btn {
+      background: var(--siemens-teal);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+      align-self: flex-end;
+    }
+    button#send-btn:hover  { background: var(--siemens-dark); }
+    button#send-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+    /* ── Welcome message ──────────────────────────────────────── */
+    .welcome {
+      text-align: center;
+      color: #666;
+      margin: auto;
+      padding: 40px 20px;
+    }
+    .welcome h2 { color: var(--siemens-dark); margin-bottom: 8px; font-size: 1.2rem; }
+    .welcome p  { font-size: 0.9rem; max-width: 400px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────────── -->
+<header>
+  <!-- Siemens logo mark (simplified SVG) -->
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="36" height="36" rx="4" fill="#009999"/>
+    <text x="18" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="white" font-family="Arial">S</text>
+  </svg>
+  <div>
+    <div class="title">AI Maintenance Assistant</div>
+    <div class="subtitle">Siemens Energy — Gas Turbine SGT Series</div>
+  </div>
+</header>
+
+<!-- ── Chat window ─────────────────────────────────────────────── -->
+<div id="chat">
+  <div class="welcome" id="welcome">
+    <h2>How can I help you today?</h2>
+    <p>Ask me anything about SGT gas turbine maintenance, inspection intervals, fault patterns, or service bulletins.</p>
+  </div>
+</div>
+
+<!-- ── Input bar ───────────────────────────────────────────────── -->
+<div id="input-bar-wrapper">
+  <div id="input-bar">
+    <textarea
+      id="query"
+      rows="1"
+      placeholder="e.g. How often should combustion liners be inspected?"
+      aria-label="Ask a maintenance question"
+    ></textarea>
+    <button id="send-btn" aria-label="Send">Send</button>
+  </div>
+</div>
+
+<script>
+  // ── Configuration ──────────────────────────────────────────────
+  // Set API_URL to your deployed Lambda API Gateway base URL.
+  // During local testing with SAM: http://localhost:3000
+  const API_URL = (window.SIEMENS_API_URL || '').replace(/\/$/, '')
+               || 'http://localhost:3000';
+
+  // Percentage multiplier for relevance score display
+  const PERCENTAGE = 100;
+
+  // ── marked.js configuration ────────────────────────────────────
+  marked.setOptions({
+    breaks: true,      // treat single newlines as <br>
+    gfm: true,         // GitHub Flavored Markdown (tables, strikethrough, etc.)
+    mangle: false,
+    headerIds: false,
+  });
+
+  // ── DOM refs ────────────────────────────────────────────────────
+  const chat    = document.getElementById('chat');
+  const queryEl = document.getElementById('query');
+  const sendBtn = document.getElementById('send-btn');
+  const welcome = document.getElementById('welcome');
+
+  // ── Auto-resize textarea ────────────────────────────────────────
+  queryEl.addEventListener('input', () => {
+    queryEl.style.height = 'auto';
+    queryEl.style.height = Math.min(queryEl.scrollHeight, 160) + 'px';
+  });
+
+  // ── Send on Enter (Shift+Enter = new line) ──────────────────────
+  queryEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+
+  // ── Helpers ─────────────────────────────────────────────────────
+  function appendMsg(role, contentEl) {
+    if (welcome) welcome.remove();
+    const wrapper = document.createElement('div');
+    wrapper.className = `msg ${role}`;
+
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = role === 'user' ? 'You' : 'Assistant';
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(contentEl);
+    chat.appendChild(wrapper);
+    chat.scrollTop = chat.scrollHeight;
+    return wrapper;
+  }
+
+  function userBubble(text) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;          // user text is plain — no markdown needed
+    return appendMsg('user', bubble);
+  }
+
+  function spinnerBubble() {
+    const el = document.createElement('div');
+    el.className = 'spinner';
+    el.innerHTML = '<span></span><span></span><span></span>';
+    return appendMsg('bot', el);
+  }
+
+  function botBubble(markdownText) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    // Parse markdown → HTML, then sanitize with DOMPurify to prevent XSS
+    bubble.innerHTML = DOMPurify.sanitize(marked.parse(markdownText));
+    return bubble;
+  }
+
+  function sourcesList(sources) {
+    if (!sources || sources.length === 0) return null;
+    const el = document.createElement('div');
+    el.className = 'sources';
+    el.innerHTML = '<strong>Sources</strong>';
+    sources.forEach(s => {
+      const item = document.createElement('div');
+      item.className = 'source-item';
+      const score = s.score !== undefined ? ` (relevance: ${(s.score * PERCENTAGE).toFixed(0)}%)` : '';
+      item.textContent = `• ${s.id}${s.section ? ' — ' + s.section : ''}${score}`;
+      el.appendChild(item);
+    });
+    return el;
+  }
+
+  function errorBubble(message) {
+    const el = document.createElement('div');
+    el.className = 'error-bubble';
+    el.textContent = `⚠ ${message}`;
+    return appendMsg('bot', el);
+  }
+
+  // ── Main send function ──────────────────────────────────────────
+  async function send() {
+    const query = queryEl.value.trim();
+    if (!query || sendBtn.disabled) return;
+
+    // Reset input
+    queryEl.value = '';
+    queryEl.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    // Show user message
+    userBubble(query);
+
+    // Show loading spinner
+    const spinnerWrapper = spinnerBubble();
+
+    try {
+      const res = await fetch(`${API_URL}/ask-assistant`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
+
+      const data = await res.json();
+
+      // Remove spinner wrapper
+      spinnerWrapper.remove();
+
+      if (!res.ok) {
+        const msg = data.message || data.error || `Server error ${res.status}`;
+        errorBubble(msg);
+        return;
+      }
+
+      // Render the markdown answer
+      const bubble = botBubble(data.answer || '*(no answer returned)*');
+      const sources = sourcesList(data.sources);
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'msg bot';
+
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.textContent = 'Assistant';
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(bubble);
+      if (sources) wrapper.appendChild(sources);
+
+      if (welcome) welcome.remove();
+      chat.appendChild(wrapper);
+      chat.scrollTop = chat.scrollHeight;
+
+    } catch (err) {
+      spinnerWrapper.remove();
+      errorBubble('Could not reach the assistant. Please check the API URL and try again.');
+      console.error(err);
+    } finally {
+      sendBtn.disabled = false;
+      queryEl.focus();
+    }
+  }
+</script>
+</body>
+</html>
