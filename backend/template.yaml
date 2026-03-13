@@ -6,8 +6,8 @@ Description: >
 
 Globals:
   Function:
-    Timeout: 60
-    MemorySize: 512
+    Timeout: 90
+    MemorySize: 768
     Runtime: python3.11
     Environment:
       Variables:
